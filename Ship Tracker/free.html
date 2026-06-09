@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Changed to start from top */
+            align-items: center;
+            height: 100vh;
+            margin: 0; /* Removed any margin */
+            background-image: url('image.webp');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            background-color: #082d51;
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            height: 80px;
+            position: fixed; /* Make navbar fixed at the top */
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+    
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+        }
+    
+        .navbar a:hover {
+            color: #00bcd4 !important;
+        }
+    
+        /* Email Box Styles */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 400px; /* Space for the fixed navbar */
+        }
+    
+        h2 {
+            color: #003366;
+        }
+    
+        .email-box {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+    
+        input[type="email"] {
+            width: 90%;
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 25px;
+            background-color: #2691d9;
+            color: white;
+            cursor: pointer;
+            transition: width 0.3s;
+        }
+    
+        button:hover {
+            background-color: #119a01;
+            width: 90%;
+        }
+    
+        .plan-info {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: left;
+        }
+    </style>
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <h2><a href="dashboard.html"><i class="fas fa-ship"></i> Ship Tracker</a></h2>
+        <nav class="nav-links">
+            <a href="tracker.html">Tracker</a>
+            <a href="tell_us.html">Report Accident</a>
+            <a href="booking.html">Cargo Booking</a>
+            <a href="approach.html">Contact Us</a>
+            <a href="p.html">Plans/Payment</a>
+        </nav>
+    </div>
+    
+    <div class="container">
+        <div class="email-box">
+            <h2>Take a Demo!</h2>
+            <div class="plan-info">Plan : Free</div>
+            <div class="plan-info">Price : $0</div>
+            <input type="email" id="email" placeholder="Enter Your Email" required>
+            <button id="submit-btn">Pay Now</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTOF8d5fQ-HCIS9od0gxJ-7pkQTOf6B2w",
+            authDomain: "project-mm-fb574.firebaseapp.com",
+            databaseURL: "https://project-mm-fb574-default-rtdb.firebaseio.com",
+            projectId: "project-mm-fb574",
+            storageBucket: "project-mm-fb574.appspot.com",
+            messagingSenderId: "902437273608",
+            appId: "1:902437273608:web:791cc72d1a43ab26c491bd"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Handle the button click event
+        document.getElementById('submit-btn').onclick = async function() {
+            const emailInput = document.getElementById('email');
+            const email = emailInput.value.trim();
+
+            if (email) {
+                // Save email and plan info to Firestore using email as document ID
+                try {
+                    await setDoc(doc(db, 'subscriptions', email), {
+                        subscription: 'Free',
+                        plan: 'Free'
+                    });
+
+                    emailInput.value = ''; // Clear the input after submission
+                    window.location.href = 'pay.html'; // Redirect to pay.html
+                } catch (error) {
+                    console.error('Error adding document: ', error);
+                    alert('There was an error processing your request.');
+                }
+            } else {
+                alert('Please enter a valid email.');
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargo Booking</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: url('cargo.jpg');
+            min-height: 100vh;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: #000;
+            display: flex;
+            flex-direction: column;
+        }
+        nav {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        nav h2 {
+            color: #000;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #000;
+            padding: 10px 15px;
+            transition: background 0.3s ease;
+            border: 2px solid transparent;
+            border-radius: 30px;
+            border-color: #000;
+        }
+        nav ul li a:hover {
+            background-color: lightgreen;
+            border-color: #000;
+        }
+        .navbar {
+            width: 100%;
+            border-bottom: 5px solid white;
+            background-color: #082d51;
+            padding: 5px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 20px;
+        }
+        .navbar a:hover{
+            color: #00bcd4 !important;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        #accountDropdown {
+            margin-left: 10px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .dropdown-item {
+            padding: 10px;
+            white-space: nowrap;
+            cursor: pointer;
+            color: black;
+            width: 100%;
+            text-align: center;
+            margin: 5px 0;
+        }
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+        #logoutButton {
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            width: 50%;
+            cursor: pointer;
+        }
+        #logoutButton:hover {
+            background-color: darkred;
+        }
+        .container {
+            background: #f4f4f4;
+    background-size: cover;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 600px;
+    margin: 50px auto;
+}
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #000;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            border: 1px solid transparent; /* Change border to transparent */
+            background: #fff;
+            color: #000;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+        }
+        input:focus {
+            border: 1px solid #3C99DC; /* Change border color on focus */
+            outline: none; /* Remove default outline */
+        }
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background: #fff;
+            color: #000;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #3C99DC;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            color: #fff;
+        }
+        input[type="submit"]:hover {
+            background-color: green;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .row .form-group {
+            flex: 1;
+        }
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+        }
+        .autocomplete-list {
+            margin-top: 10px;
+            border-radius: 10px;
+            max-height: 150px;
+            overflow-y: auto;
+            position: absolute;
+            z-index: 1000;
+            background: #fff;
+            width: calc(100% - 20px);
+        }
+        .autocomplete-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+        .autocomplete-item:hover {
+            background-color: #f0f0f0;
+        }
+        footer {
+            background-color: #082d51;
+            border-top: 5px solid white;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: white;
+        }
+        .social-icons {
+            margin-top: 10px;
+        }
+        .social-icons a {
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2><a href="dashboard.html"><i class="fas fa-ship"></i> Ship Tracker</a></h2>
+        <nav class="nav-links">
+            <a href="tracker.html">Tracker</a>
+            <a href="tell_us.html">Report Accident</a>
+            <a href="booking.html">Cargo Booking</a>
+            <a href="show.html">My Bookings</a>
+            <a href="approach.html">Contact Us</a>
+            <a href="p.html">Plans/Payment</a>
+            <div class="user-info">
+                <span id="userUsername"></span>
+                <a href="#" id="accountDropdown" role="button" aria-expanded="false">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="dropdownMenu" class="dropdown-menu" style="display: none;"><center>
+                    <div id="userEmail" class="dropdown-item"></div>
+                    <div id="userPlan" class="dropdown-item"></div>
+                    <div class="dropdown-item" id="logoutButton">Logout</div></center>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- End Navbar -->
+
+    <div class="wrapper">
+        <div class="container">
+            <h1>Book Cargo</h1>
+            <form id="bookingForm">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="businessName">Business Name</label>
+                        <input type="text" id="businessName" required placeholder="Enter your business name">
+                    </div>
+                    <div class="form-group">
+                        <label for="contactInfo">Phone Number</label>
+                        <input type="text" id="contactInfo" required placeholder="Enter your contact info">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="source">Source</label>
+                        <input type="text" id="source" required placeholder="Enter source location" autocomplete="off">
+                        <div id="sourceSuggestions" class="autocomplete-list"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="destination">Destination</label>
+                        <input type="text" id="destination" required placeholder="Enter destination location" autocomplete="off">
+                        <div id="destinationSuggestions" class="autocomplete-list"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cargoType">Type of Cargo</label>
+                    <input type="text" id="cargoType" required placeholder="Enter cargo type">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="cargoWeight">Cargo Weight (in tons)</label>
+                        <input type="number" id="cargoWeight" required placeholder="Enter cargo weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="units">Number of Units</label>
+                        <input type="number" id="units" required placeholder="Enter number of units">
+                    </div>
+                    <div class="form-group">
+                        <label for="dimensions">Dimensions (L x W x H) in cm</label>
+                        <input type="text" id="dimensions" required placeholder="e.g., 100 x 50 x 30">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="productValue">Product Value (in USD)</label>
+                    <input type="number" id="productValue" required placeholder="Enter product value">
+                </div>
+                <div class="form-group">
+                    <label for="handlingInstructions">Special Handling Instructions</label>
+                    <textarea id="handlingInstructions" rows="3" placeholder="Enter any special handling instructions"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="bookingDate">Booking Date</label>
+                    <input type="date" id="bookingDate" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit Booking">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+            <p>&copy; 2024 Ship Tracker | an eaSy tecH association. All Rights Reserved.</p>
+            <p>
+                <a href="privacy.html">Privacy Policy</a> | 
+                <a href="terms.html">Terms of Service</a>
+            </p>
+            <div class="social-icons">
+                <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+    </footer>
+
+    <script type="module">
+        // Import Firebase and required modules
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getDatabase, ref, push } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTOF8d5fQ-HCIS9od0gxJ-7pkQTOf6B2w",
+            authDomain: "project-mm-fb574.firebaseapp.com",
+            databaseURL: "https://project-mm-fb574-default-rtdb.firebaseio.com",
+            projectId: "project-mm-fb574",
+            storageBucket: "project-mm-fb574.appspot.com",
+            messagingSenderId: "902437273608",
+            appId: "1:902437273608:web:791cc72d1a43ab26c491bd"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById("bookingDate").setAttribute("min", formattedDate);
+        });
+
+        const setupAutocomplete = (inputId, suggestionsId) => {
+            const input = document.getElementById(inputId);
+            const suggestions = document.getElementById(suggestionsId);
+
+            input.addEventListener('input', async function() {
+                const query = this.value;
+
+                if (query.length < 3) {
+                    suggestions.innerHTML = '';
+                    return;
+                }
+
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                suggestions.innerHTML = '';
+                data.forEach(item => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.classList.add('autocomplete-item');
+                    suggestionItem.innerText = item.display_name;
+                    suggestionItem.addEventListener('click', () => {
+                        input.value = item.display_name;
+                        suggestions.innerHTML = '';
+                    });
+                    suggestions.appendChild(suggestionItem);
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target)) {
+                    suggestions.innerHTML = '';
+                }
+            });
+        };
+
+        setupAutocomplete("source", "sourceSuggestions");
+        setupAutocomplete("destination", "destinationSuggestions");
+
+        document.getElementById("bookingForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const bookingData = {
+                businessName: document.getElementById("businessName").value,
+                contactInfo: document.getElementById("contactInfo").value,
+                source: document.getElementById("source").value,
+                destination: document.getElementById("destination").value,
+                cargoType: document.getElementById("cargoType").value,
+                cargoWeight: document.getElementById("cargoWeight").value,
+                units: document.getElementById("units").value,
+                dimensions: document.getElementById("dimensions").value,
+                productValue: document.getElementById("productValue").value,
+                handlingInstructions: document.getElementById("handlingInstructions").value,
+                bookingDate: document.getElementById("bookingDate").value
+            };
+
+            // Save data to Firebase
+            push(ref(database, 'bookings'), bookingData)
+                .then(() => {
+                    alert('Booking submitted successfully!');
+                    document.getElementById("bookingForm").reset();
+                })
+                .catch((error) => {
+                    console.error('Error saving booking:', error);
+                });
+        });
+        const userInfo = JSON.parse(sessionStorage.getItem("user-info"));
+
+if (userInfo) {
+    document.getElementById("userUsername").innerText = userInfo.username; // Show username in navbar
+    document.getElementById("userEmail").innerText = `Email : ${userInfo.email}`; // Show email in dropdown
+    
+    // Example: Fetch the user's subscription plan (for demo purposes)
+    document.getElementById("userPlan").innerText = `Plan : Premium`; // For now, set a dummy plan
+}
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+    alert("Logging out...");
+    sessionStorage.removeItem("user-info");
+    window.location.reload();
+});
+
+document.getElementById("accountDropdown").addEventListener("click", function(event) {
+    event.stopPropagation(); // Prevent the click from bubbling up
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.style.display = dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '' ? 'block' : 'none';
+});
+
+// Hide dropdown if clicked outside
+document.addEventListener("click", function(event) {
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    if (!dropdownMenu.contains(event.target) && event.target !== document.getElementById("accountDropdown")) {
+        dropdownMenu.style.display = 'none';
+    }
+});
+
+    </script>
+</body>
+</html>

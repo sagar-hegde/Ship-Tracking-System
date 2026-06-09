@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+
+    <!-- Add external fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+        body {
+            background-image: url(contact.jpg);
+            background-repeat: no-repeat; /* Prevents the background from repeating */
+            background-size: cover;  /* Ensures the image covers the entire body */
+            background-position: center;  /* Ensures the image is centered */
+            min-height: 100vh; 
+        }
+
+        .navbar {
+    width: 100%;
+    background-color: #082d51;
+    border-bottom: 5px solid white;
+    padding: 5px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    height: 80px;
+}
+
+.nav-links {
+    display: flex; /* Ensures links are in a row */
+    align-items: center; /* Aligns links vertically centered */
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px; /* Adjusted margin for spacing between links */
+}
+
+.navbar a:hover {
+    color: #00bcd4 !important;
+}
+
+
+        /* Contact form section */
+        .contact-section {
+            padding: 80px 20px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin: 30px auto 30px auto; /* Adjusted margin */
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 36px;
+            color: #007bff;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .contact-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .contact-form button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #00a8ff;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #5a07ad;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: #082d51;
+            border-top: 5px solid white;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-icons a {
+            margin: 0 10px;
+            font-size: 1.2rem; /* Adjust size as needed */
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .navbar a {
+                font-size: 14px;
+            }
+
+            .navbar-logo {
+                font-size: 20px;
+            }
+
+            .contact-section {
+                padding: 50px 20px;
+            }
+        }
+
+        .user-info {
+    display: flex;
+    align-items: center;
+}
+
+.navbar h2 {
+    font-size: 24px; /* Adjust font size if needed */
+    margin: 0;
+}
+
+#dropdownMenu {
+    display: none;
+    position: absolute;
+    top: 90px; /* Adjust the position as needed */
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it appears above other elements */
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+        .dropdown-item {
+            padding: 10px;
+            white-space: nowrap;
+            cursor: pointer;
+            color: black; /* Set text color to black */
+            width: 100%; /* Make it take full width */
+            text-align: center; /* Center text */
+            margin: 5px 0;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        #logoutButton {
+            background-color: red; /* Red background */
+            color: white; /* White text color */
+            text-align: center;
+            border: none;
+            border-radius: 10px;
+            padding: 10px;
+            width: 50%; /* Adjust width as needed */
+            cursor: pointer;
+        }
+
+        #logoutButton:hover {
+            background-color: darkred; /* Darker red on hover */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <div class="navbar">
+        <h2><a href="dashboard.html"><i class="fas fa-ship"></i> Ship Tracker</a></h2>
+        <nav class="nav-links">
+            <a href="tracker.html">Tracker</a>
+            <a href="tell_us.html">Report Accident</a>
+            <a href="booking.html">Cargo Booking</a>
+            <a href="approach.html">Contact Us</a>
+            <a href="p.html">Plans/Payment</a>
+            <div class="user-info">
+                <span id="userUsername"></span>
+                <a href="#" id="accountDropdown" role="button" aria-expanded="false" style="margin-left: 10px;">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="dropdownMenu" class="dropdown-menu" style="display: none;">
+                    <center>
+                        <div id="userEmail" class="dropdown-item"></div>
+                        <div id="userPlan" class="dropdown-item"></div>
+                        <div class="dropdown-item" id="logoutButton">Logout</div>
+                    </center>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Contact form section -->
+    <section class="contact-section">
+        <h2>Contact Us</h2>
+        <div class="contact-form">
+            <form>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Ship Tracker | an eaSy tecH association. All Rights Reserved.</p>
+            <p>
+                <a href="privacy.html">Privacy Policy</a> |
+                <a href="terms.html">Terms of Service</a>
+            </p>
+            <div class="social-icons">
+                <a href="https://facebook.com" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://twitter.com" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js';
+        import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js';
+        import { getDatabase, ref, child, get } from 'https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js';
+        import { getFirestore, collection, setDoc, doc } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js';
+
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA_1qCQc61qaypGdcVErBYqQny1yrdXq9k",
+            authDomain: "wetrack-8de89.firebaseapp.com",
+            databaseURL: "https://wetrack-8de89-default-rtdb.firebaseio.com",
+            projectId: "wetrack-8de89",
+            storageBucket: "wetrack-8de89.appspot.com",
+            messagingSenderId: "128819233863",
+            appId: "1:128819233863:web:34cc57b8a4f75843de58b0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const db = getDatabase(app);
+
+
+        // Check if user is logged in
+        const userInfo = JSON.parse(sessionStorage.getItem("user-info"));
+
+if (userInfo) {
+    document.getElementById("userUsername").innerText = userInfo.username; // Show username in navbar
+    document.getElementById("userEmail").innerText = `Email : ${userInfo.email}`; // Show email in dropdown
+    
+    // Fetch the user's subscription plan from Firestore
+    getDoc(doc(db, 'subscriptions', userInfo.email)).then((docSnap) => {
+        if (docSnap.exists()) {
+            const planData = docSnap.data();
+            document.getElementById("userPlan").innerText = `Plan : ${planData.plan || "No Plan"}`;
+        } else {
+            console.log('No subscription found for this user.');
+            document.getElementById("userPlan").innerText = "No Plan";
+        }
+    }).catch((error) => {
+        console.error("Error fetching subscription:", error);
+    });
+}
+
+document.getElementById("logoutButton").addEventListener("click", function() {
+    alert("Logging out...");
+    sessionStorage.removeItem("user-info");
+    window.location.reload();
+});
+
+document.getElementById("accountDropdown").addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevent the click from bubbling up
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    // Toggle visibility of the dropdown menu
+    dropdownMenu.style.display = dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '' ? 'block' : 'none';
+});
+
+// Hide dropdown if clicked outside
+document.addEventListener("click", function (event) {
+    const dropdownMenu = document.getElementById("dropdownMenu");
+
+    // Check if the clicked element is outside the dropdown or button
+    if (!dropdownMenu.contains(event.target) && event.target !== document.getElementById("accountDropdown")) {
+        dropdownMenu.style.display = 'none';
+    }
+});
+
+
+
+                    // Handle form submission
+                    document.addEventListener('DOMContentLoaded', () => {
+                document.querySelector('.contact-form form').addEventListener('submit', async function (e) {
+                    e.preventDefault();
+    
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const message = document.getElementById('message').value;
+    
+                    // Get current date in DDMMYY format
+                    const date = new Date();
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+                    const year = String(date.getFullYear()).slice(-2); // Last two digits of year
+                    const dateString = day + month + year;
+    
+                    try {
+                        // Create a document with the date as the ID
+                        await setDoc(doc(collection(db, "contacts"), dateString), {
+                            name: name,
+                            email: email,
+                            message: message
+                        });
+                        alert("Message sent successfully!");
+                        this.reset();
+                    } catch (error) {
+                        console.error("Error sending message: ", error);
+                        alert("Error sending message: " + error.message);
+                    }
+                });
+            });
+
+    </script>
+    
+        
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    
+        <!-- JavaScript for scrolling effect on the navbar -->
+        <script>
+            window.addEventListener("scroll", function () {
+                const navbar = document.getElementById("navbar");
+                if (window.scrollY > 50) {
+                    navbar.classList.add("scrolled");
+                } else {
+                    navbar.classList.remove("scrolled");
+                }
+            });
+        </script>
+    
+</body>
+
+</html>
