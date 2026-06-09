@@ -109,15 +109,14 @@
     import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCTOF8d5fQ-HCIS9od0gxJ-7pkQTOf6B2w",
-        authDomain: "project-mm-fb574.firebaseapp.com",
-        databaseURL: "https://project-mm-fb574-default-rtdb.firebaseio.com",
-        projectId: "project-mm-fb574",
-        storageBucket: "project-mm-fb574.appspot.com",
-        messagingSenderId: "902437273608",
-        appId: "1:902437273608:web:791cc72d1a43ab26c491bd"
-    };
+        const firebaseConfig = {
+          apiKey:            "YOUR_API_KEY",
+          authDomain:        "YOUR_PROJECT.firebaseapp.com",
+          projectId:         "YOUR_PROJECT_ID",
+          storageBucket:     "YOUR_PROJECT.appspot.com",
+          messagingSenderId: "YOUR_SENDER_ID",
+          appId:             "YOUR_APP_ID"
+        };
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
