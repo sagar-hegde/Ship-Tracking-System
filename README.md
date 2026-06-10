@@ -6,7 +6,7 @@ A modern **real-time ship tracking web application** designed to improve maritim
 
 ## 📌 Overview
 
-The **Maritime Tracking System (MTS)** is built to overcome limitations of traditional tracking systems by providing:
+The **Ship Tracking System** is built to overcome limitations of traditional tracking systems by providing:
 
 * Real-time ship monitoring
 * Interactive map visualization
